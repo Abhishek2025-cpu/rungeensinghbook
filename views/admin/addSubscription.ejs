@@ -1,0 +1,123 @@
+<%- include('../layout/header.ejs') %>
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <%- include('../layout/navbar.ejs') %>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <%- include('../layout/sidebar.ejs') %>
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                                <a href="/view-subscription" class="text-gray-500">
+                                                    <i class="ki-duotone ki-dollar fs-1 text-gray-900">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                    </i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-900 fw-bold lh-1">Subscription Plan</li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-500">Add New</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-success alert-dismissible" role="alert"><%= message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="card mb-5 mb-xl-10">
+                                            <div class="card-header border-0" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                                <div class="card-title m-0">
+                                                    <h3 class="fw-bold m-0">Add Subscription Plan</h3>
+                                                </div>
+                                            </div>
+                                            <form class="form form-vertical" method="post">
+                                                <div class="card-body border-top p-9">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="row mb-10">
+                                                                <label for="exampleFormControlInput1" class="required fs-5 fw-semibold mb-2 col-lg-2">Plan Name</label>
+                                                                <div class="col-lg-10">
+                                                                    <input type="text" class="form-control" name="name" placeholder="Enter name" pattern="^[A-Za-z0-9 ,.-&]+$" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-10">
+                                                                <label for="exampleFormControlInput1" class="required fs-5 col-lg-2 fw-semibold mb-2">Duration</label>
+                                                                <div class="col-lg-10">
+                                                                    <input type="text" class="form-control" name="duration" placeholder="Enter Duration" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-10">
+                                                                <label for="exampleFormControlInput1" class="required fs-5 fw-semibold mb-2 col-lg-2">Duration in Terms</label>
+                                                                <div class="col-lg-10">
+                                                                    <select class="form-select" name="duration_in_terms" data-control="select2" data-dropdown-parent="#kt_header_search" data-placeholder="Select Duration in Terms..." class="form-select form-select-sm form-select-solid">
+                                                                        <option value="">Select Duration Terms..</option>
+                                                                        <option value="days">Days</option>
+                                                                        <option value="months">Months</option>
+                                                                        <option value="year">Year</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-10">
+                                                                <label for="exampleFormControlInput1" class="required fs-5 fw-semibold mb-2 col-lg-2">Price</label>
+                                                                <div class="col-lg-10">
+                                                                    <input type="text" class="form-control " name="price" placeholder="Price" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-10">
+                                                                <label for="formswitch" class="fs-5 fw-semibold mb-2 col-lg-2">Is Enable</label>
+                                                                <div class="col-lg-10">
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input" type="checkbox" name="is_active" id="flexSwitchDefault"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                                        <a href="/view-subscription" class="btn btn-secondary ms-3 mb-1">Back</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="kt_app_footer" class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<%- include('../layout/footer.ejs') %>

@@ -1,0 +1,444 @@
+<!-- Core Libraries -->
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Global Plugins and Scripts -->
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/js/scripts.bundle.js"></script>
+
+<!-- Authentication -->
+<script src="assets/js/custom/authentication/sign-in/general.js"></script>
+
+<!-- DataTables -->
+<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
+<!-- Widgets and Custom Components -->
+<script src="assets/js/widgets.bundle.js"></script>
+<script src="assets/js/custom/widgets.js"></script>
+<script src="assets/js/custom/apps/chat/chat.js"></script>
+
+<!-- Modal Utilities -->
+<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+<script src="assets/js/custom/utilities/modals/create-account.js"></script>
+<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+
+<!-- Payment Integration -->
+<script src="assets/js/paymentGateway.js"></script>
+
+<!-- Active menu -->
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		var url = window.location.href; // Use href to get the full URL
+		// Check if the URL contains specific edit texts and add active class to corresponding view texts
+		// Map of edit URLs to their corresponding view URLs
+		const editToViewMap = {
+			'edit-category': 'view-category',
+			'edit-subcategory': 'view-category',
+			'edit-author': 'view-author',
+			'edit-book': 'view-book',
+			'edit-subscription': 'view-subscription',
+			'profile': 'admin-profile',
+			'change-password': 'admin-profile',
+			'change-password': 'dashboard',
+			'currency': 'dashboard',
+			'profile': 'dashboard',
+		};
+
+		// Check URL against map and add active class
+		for (const [editPath, viewPath] of Object.entries(editToViewMap)) {
+			if (url.includes(editPath)) {
+				jQuery(`#kt_app_sidebar div.menu-item a[href*="${viewPath}"]`).addClass('active');
+				break;
+			}
+		}
+		// Existing code to add active class based on the current URL
+		jQuery('#kt_app_sidebar div.menu-sub a[href="' + url + '"]').addClass('active');
+		jQuery('#kt_app_sidebar div.menu-sub a').filter(function () {
+			return this.href == url;
+		}).addClass('active');
+		jQuery('a.active').parent().addClass("submenu-active");
+		jQuery('div.submenu-active').parent().parent().addClass("show here");
+		jQuery('div.submenu-active').parent().parent().parent().parent().addClass("show here");
+
+		jQuery('#kt_app_sidebar div.menu-item a[href="' + url + '"]').addClass('active');
+		jQuery('#kt_app_sidebar div.menu-item a').filter(function () {
+			return this.href == url;
+		}).addClass('active');
+	});
+</script>
+<!-- <script type="text/javascript">
+	jQuery(document).ready(function () {
+		var url = window.location;
+		jQuery('div.menu-sub a[href="' + url + '"]').addClass('active');
+		jQuery('div.menu-sub a').filter(function() {
+			return this.href == url;
+		}).addClass('active');
+			jQuery('a.active').parent().addClass("test");
+		jQuery('div.test').parent().parent().addClass("show here");
+
+		jQuery('div.menu-item a[href="' + url + '"]').addClass('active');
+		jQuery('div.menu-item a').filter(function() {
+			return this.href == url;
+		}).addClass('active');
+	});
+</script> -->
+
+<!-- Datatable-->
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+	jQuery('#kt_datatable_zero_configuration').DataTable({
+		lengthMenu: [
+				[5,10, 20, 40, -1],
+				[5,10, 20, 40, 'All'],
+			],
+		info: true,
+		searchPanes: {
+			layout: 'columns-2',
+			dtOpts: {
+				dom: "tp",
+				paging: false,
+				pagingType: 'numbers',
+				searching: false,
+				viewTotal: true
+			}
+		},
+		dom: 'Plfrtip',
+		columnDefs: [
+			{
+				searchPanes: {
+					show: true
+				},
+				targets: [4, 5]
+			}
+		],
+		language: {
+				paginate: {
+					next: '<i class="next"></i>', // or '→'
+					previous: '<i class="previous"></i>' // or '←' 
+				}
+			}
+	});
+	jQuery('.dtsp-searchPane > .dataTables_wrapper').addClass('dtsp-hidden');
+	jQuery('.dtsp-topRow').addClass('dtsp-bordered');
+});
+</script>
+
+<!--Toasts Js-->
+<script src="assets/js/toastr.min.js"></script>
+<script src="assets/js/toastrNotifications.js"></script>
+
+<!--Quill Editor Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.1/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>
+	 document.addEventListener("DOMContentLoaded", function() {
+    // Define all elements for quill editor
+    const elements = ['#delete_account_instruction','#terms_of_use','#privacy_policy','#about_us'];
+
+    // Loop all elements
+    elements.forEach(element => {
+        // Get quill element
+        let quillElement = document.querySelector(element);
+
+        // Break if element not found
+        if (!quillElement) {
+            return;
+        }
+        const quill = new Quill(quillElement, {
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'], // toggled buttons
+                    ['blockquote', 'code-block'], // blocks
+                    ['link','image'],//Link, Image
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }], // lists
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }], // headings
+                    [{ 'font': [] }], // font family
+                    [{ 'align': [] }]  // text align
+                ]
+            },
+            placeholder: 'Type your text here...',
+            theme: 'snow' // or 'bubble'
+        });
+
+			// Paste plaintext into the editor
+			quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+				var plaintext = node.innerText
+				var Delta = Quill.import('delta')
+				return new Delta().insert(plaintext)
+			});
+
+			// Get the hidden input field for this editor
+			const hiddenInput = document.querySelector(`input[name=${element.replace('#', '')}]`);
+
+			// On form submission, fill the hidden input with the editor's content
+			const form = document.querySelector("form");
+			form.addEventListener('submit', function (e) {
+				hiddenInput.value = quill.root.innerHTML;
+			});
+		});
+
+	});
+
+	// Custom function to submit all Quill editor data
+	function submitAllQuillData() {
+		// Loop through all Quill editors
+		const quillEditors = document.querySelectorAll('.ql-editor');
+		quillEditors.forEach(editor => {
+			// Get the content of the Quill editor
+			var editorContent = editor.innerHTML;
+
+			// Find the corresponding hidden input field
+			var hiddenInputName = editor.closest('.mb-15').querySelector('input[type="hidden"]').name;
+			var hiddenInput = document.querySelector(`input[name="${hiddenInputName}"]`);
+
+			// Assign the content of the Quill editor to the hidden input field
+			hiddenInput.value = editorContent;
+		});
+
+		// Submit the form
+		document.querySelector("form").submit();
+	}
+</script>
+
+<!-- Quill Editor For book description -->
+<script type="text/javascript">
+	// Get the hidden input field
+	function myFunction() {
+		var editor = document.getElementsByClassName('ql-editor')[0].innerHTML
+		var about = document.querySelector('input[name=description]');
+		about.value = editor
+	};
+
+	// Quill editor Toolbar options
+	const toolbarOptions = [
+		['bold', 'italic', 'underline'], // toggled buttons
+		['blockquote', 'code-block'], // blocks
+		['link','image'],//Image
+		[{ 'list': 'ordered' }, { 'list': 'bullet' }], // lists
+		[{ 'header': [1, 2, 3, 4, 5, 6, false] }], // headings
+		[{ 'font': [] }], // font family
+		[{ 'align': [] }],  // text align
+	];
+
+	// Quill editor
+	const quill = new Quill('#description', {
+		modules: {
+			toolbar: toolbarOptions
+		},
+		placeholder: 'Compose an epic...',
+		theme: 'snow', // or 'bubble'
+	});
+
+	// Paste plaintext into the editor
+	quill.clipboard.addMatcher(Node.ELEMENT_NODE, function (node, delta) {
+		var plaintext = node.innerText
+		var Delta = Quill.import('delta')
+		return new Delta().insert(plaintext)
+	})
+
+	// Get the hidden input field
+	var form = document.querySelector("form");
+	var hiddenInput = document.querySelector('#hiddenInput');
+
+	// On form submission, fill the hidden input with the editor's content
+	form.addEventListener('submit', function (e) {
+		hiddenInput.value = quill.root.innerHTML;
+	});
+</script>
+
+<!-- Populate subcategory according to category -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#categoryDropdown').on('change', function() {
+			const categoryId = $(this).val();
+			let url = window.location.href;
+
+			const hasParams = url.includes('?');
+			const params = `categoryId=${categoryId}`;
+			if (hasParams) {
+				url = url.replace(/categoryId=[^&]+/, params);
+			} else {
+				url += `?${params}`;
+			}
+			// Update the URL without reloading the page
+			window.history.pushState({ path: url }, '', url);
+
+			const newurl = window.location.href;
+			const queryString = newurl.split('?categoryId=')[1]; // Get the part after the '?'
+			
+			// Clear previous selections and show all options
+			$('#subcategoryDropdown').val(null).trigger('change');
+
+			// Filter options based on category
+			$('#subcategoryDropdown option').each(function() {
+				const category = $(this).data('categoryid');
+				if (category === queryString) {
+					$(this).prop('disabled', false); // Enable options matching the category
+				} else {
+					$(this).prop('disabled', true); // Disable options not matching the category
+				}
+			});
+
+			// Refresh Select2 to reflect changes
+			$('#subcategoryDropdown').trigger('change.select2');
+		});
+	});
+</script>
+
+<!-- Populate subcategory according to category -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Function to update the options based on the selected categoryId
+		function updateOptions(categoryId) {
+			const subcategoryDropdown = $('#EditsubcategoryDropdown');
+			
+			// Hide all options first
+			subcategoryDropdown.find('option').hide();
+			
+			// Show options with matching categoryId or show all options if categoryId is empty
+			subcategoryDropdown.find('option').each(function() {
+				const categoryIdAttr = $(this).data('categoryid');
+				if (!categoryId || (categoryIdAttr && categoryIdAttr === categoryId)) {
+					$(this).show(); // Show options matching the category
+					$(this).prop('disabled', false); // Enable options matching the category
+				} else {
+					$(this).prop('disabled', true); // Disable options not matching the category
+				}
+			});
+
+			// Refresh Select2 to reflect changes
+			subcategoryDropdown.select2();
+		}
+
+		// Initialize Select2 for the category dropdown
+		$('#EditcategoryDropdown').select2();
+
+		// Event listener for the categoryId select element
+		$('#EditcategoryDropdown').on('change', function() {
+			const categoryId = $(this).val();
+			let url = window.location.href;
+
+			// Update the URL with the selected categoryId
+			const hasParams = url.includes('?');
+			const params = `categoryId=${categoryId}`;
+			if (hasParams) {
+				if (url.includes('&')) {
+					url = url.replace(/&[^&]+$/, '&' + params);
+				} else {
+					url += '&' + params;
+				}
+			} else {
+				url += `?${params}`;
+			}
+
+			// Update the URL without reloading the page
+			window.history.pushState({ path: url }, '', url);
+
+			// Update the options based on the selected categoryId
+			updateOptions(categoryId);
+		});
+
+		// Initial update of options when the page loads
+		$(window).on('DOMContentLoaded', function() {
+			const categoryId = $('#EditcategoryDropdown').val();
+			updateOptions(categoryId);
+		});
+});
+</script>
+
+<!-- Datatable-->
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery('#list-table,#ebook-table').DataTable({
+			lengthMenu: [
+				[5,20, 40, 60, -1],
+				[5,20, 40, 60, 'All'],
+			],
+			info: true,
+			language: {
+				paginate: {
+					next: '<i class="next"></i>', // or '→'
+					previous: '<i class="previous"></i>' // or '←' 
+				}
+			}
+		});
+
+	});
+</script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery('div.dataTables_wrapper div.dataTables_filter input').attr('placeholder',"Search...").css("font-size","14px");
+	});
+</script>
+
+<!-- Search Filter -->
+<script type="text/javascript">
+	// Initiate Search Filter
+	document.addEventListener("DOMContentLoaded", function () {
+		const searchInput = document.querySelector('[data-kt-list-table="search"]');
+		const tableRows = document.querySelectorAll("#list-table tbody tr, #ebook-table tbody tr");
+
+		searchInput.addEventListener("input", function () {
+			const searchTerm = this.value.trim().toLowerCase();
+
+			tableRows.forEach(function (row) {
+				const rowData = row.textContent.trim().toLowerCase();
+				if (rowData.includes(searchTerm)) {
+					row.style.display = "";
+				} else {
+					row.style.display = "none";
+				}
+			});
+		});
+	});
+</script>
+
+<!--Filter book by category,author-->
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery('#ebook-table tbody tr').show();
+
+		// Event handler for both category and author filter change
+		$('#filterCategory, #filterAuthor').change(function () {
+			var selectedCategoryText = $('#filterCategory').find("option:selected").text().trim();
+			var selectedAuthorText = $('#filterAuthor').find("option:selected").text().trim();
+			filterTable(selectedCategoryText, selectedAuthorText);
+		});
+
+		// Show all rows if "All" is selected for both category and author
+		if (selectedCategoryText === 'All' && selectedAuthorText === 'All') {
+			jQuery('#ebook-table tbody tr').show();
+			return;
+		}
+
+		// Function to filter the table based on selected category and author
+		function filterTable(selectedCategoryText, selectedAuthorText) {
+			$('#ebook-table tbody tr').hide().filter(function () {
+				var category = $(this).find('td:nth-child(4)').text().trim();
+				var author = $(this).find('td:nth-child(5)').text().trim();
+				var categoryMatch = (selectedCategoryText === 'All' || category === selectedCategoryText);
+				var authorMatch = (selectedAuthorText === 'All' || author === selectedAuthorText);
+				return categoryMatch && authorMatch;
+			}).show();
+		}
+		
+	});
+</script>
+
+<!--Book on rent-->
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.rent-sec').hide();
+		jQuery('.select-rent').on('change',function(){
+			if(jQuery('.select-rent option:selected').val() === 'yes'){jQuery('.rent-sec').show();}
+			else{jQuery('.rent-sec').hide();}
+		});
+		if(jQuery('.select-rent option:selected').val() === 'yes'){jQuery('.rent-sec').show();}
+		else{jQuery('.rent-sec').hide();}
+	});
+</script>
+
+</body>
+</html>

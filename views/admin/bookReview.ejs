@@ -1,0 +1,200 @@
+<%- include('../layout/header.ejs') %>
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <%- include('../layout/navbar.ejs') %>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <%- include('../layout/sidebar.ejs') %>
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                                <a href="/view-dashboard" class="text-gray-500">
+                                                    <i class="ki-duotone ki-home fs-1 text-gray-900">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-900 fw-bold lh-1">Reviews</li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-500 lh-1">View Reviews</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                <div class="row">
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-header pt-5 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                            <div class="card-title m-0">
+                                                <div class="d-flex align-items-center position-relative my-1">
+                                                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>                
+                                                    <input type="text" data-kt-list-table ="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Review">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-5 p-9">
+                                    <div class="table-responsive">   
+                                        <table class="table table-hover table-rounded table-row-bordered border gy-7 gs-7" id="list-table">
+                                            <thead>
+                                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                    <th>Sr No</th>
+                                                    <th>Book Name</th>
+                                                    <th>UserName</th>
+                                                    <th>Reviews</th>
+                                                    <th>Ratings</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="fw-semibold text-gray-600">
+                                            <% let cnt=1 %>
+                                                <% bookReview.forEach(function(bookReviews){ %>
+                                                        <tr>
+                                                            <td><strong><%= cnt %></strong></td>
+
+                                                            <td> 
+                                                                <div class="d-flex">
+                                                                    <div class="symbol symbol-50px">
+                                                                        <span class="symbol-label symbol symbol-50px" style="background-image:url('/assets/bookImages/<%= bookReviews.bookId.image %>');"></span>
+                                                                    </div>
+                                                                    <h2  class="text-gray-800 ps-5 pt-5 fs-5"><%= bookReviews.bookId.name %></h2>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="text-gray-800"><%= bookReviews.userId.username %></td>
+
+                                                            <td><span class="badge badge-danger"><%- bookReviews.description %></span></td>
+
+                                                            <td><span class="badge badge-dark"><%- bookReviews.rating %></span></td>
+
+                                                            <% for (let i in loginData) {
+
+                                                                if(String(loginData[i]._id)===locals.user.id) {
+
+                                                                    if(loginData[i].is_admin==1) { %>
+                                                            <td>
+                                                                <form action="/review-status/<%= bookReviews._id %>/toggle"
+                                                                id="featureForm" method="POST">
+                                                                    <a id="toggleButton" >
+                                                                        <div class="form-check form-switch mb-0">
+                                                                            <input type="hidden" name="title" value="<%= bookReviews.name%>"/>
+                                                                            <input class="form-check-input" type="checkbox" name="is_active"
+                                                                        id="flexSwitchCheckDefault" <% if(bookReviews.is_active==1) { %> checked <% }else{} %>>
+                                                                        </div>
+                                                                    </a>
+                                                                </form>
+                                                            </td>
+                                                            <td>
+                                                                <div class="action-links">
+                                                                    <a href="" data-bs-toggle="modal" data-bs-target="#kt_modal_stacked_<%= bookReviews._id %>">
+                                                                        <i class="fa-solid fa-trash-can text-danger"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td> 
+                                                            <% } else if (loginData[i].is_admin==0) { %>
+                                                                <td>
+                                                                    <div class="form-check form-switch mb-0" onclick="alert('You have no access to change status..!!')">
+                                                                    <input class="form-check-input" type="checkbox" name="is_active" id="flexSwitchCheckDefault"  <% if(bookReviews.is_active==1) { %> checked <% }else{} %>disabled>
+                                                                </div></td>
+                                                                <td>
+                                                                    <div class="action-links">
+                                                                        <a onclick="alert('You have no access to delete Subcategory..!!')" class="ms-3">
+                                                                            <i class="fa-solid fa-trash-can text-danger"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                        <% }  } }%> 
+                                                        </tr>
+                                                        <div class="modal fade" tabindex="-1" id="kt_modal_stacked_<%= bookReviews._id %>">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header justify-content-center">
+                                                                        <div class="modal-title">
+                                                                            <img src="assets/media/logos/alert.png" class="h-50">
+                                                                        </div>
+                                                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <p class="fs-5 fw-semibold">Are you sure you want to delete this review ?</br> 
+                                                                            This process cannot be undone.</p>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-center">
+                                                                        <a href="/delete-bookReviews?id=<%= bookReviews._id %>"><button type="button" class="btn btn-danger me-5">Yes,delete!</button></a>
+                                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">No,cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+    
+                                                        <% cnt++; %>
+                                                    <% }); %>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div id="kt_app_footer" class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('click', function (event) {
+                const form = checkbox.closest('form');
+                if (form) {
+                    const fieldName = form.querySelector('[name="title"]').value;
+    
+                    // Prompt the user for confirmation
+                    if (!confirm(`Are you sure you want to ${checkbox.checked ? 'Enable' : 'Disable'} ${fieldName}?`)) {
+                        // If the user clicks "Cancel," prevent the checkbox from changing
+                        event.preventDefault();
+                        return;
+                    }
+    
+                    const formData = new FormData(form);
+                    $.ajax({
+                        type: "POST",
+                        url: form.action,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            // Handle the success response data here
+                            console.log(data);
+                        },
+                        error: function (error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<%- include('../layout/footer.ejs') %>
+                                        

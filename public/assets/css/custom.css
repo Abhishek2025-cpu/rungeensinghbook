@@ -1,0 +1,292 @@
+.bg-primary2 {
+    background-color: #46764e;
+}
+.dash-menu {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+}
+.card {
+    overflow: hidden;
+}
+.card img {
+    width: 100%;
+    height: 200px;
+}
+img.md-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.profile-img img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.action-links {
+    gap: 10px;
+}
+.action-links .edit-wrap,.action-links .delete-wrap{
+    /* background-color: #E8FFF3; */
+    width: 30px;
+    height: 30px;
+    display: block;
+    padding: 15px 20px 25px 20px
+}
+/* .action-links .delete-wrap{
+    background-color: #FFF5F8 !important;
+} */
+.action-links  i.ki-duotone {
+    line-height: 0px;
+    margin-left: -11px;
+}
+.menu-title{
+    color: #071437 !important;
+}
+.menu-item.dash-menu:hover span.menu-icon i {
+    color: #000 !important;
+}
+li.avatar-sm img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+table td {
+    vertical-align: middle;
+}
+input.form-check-input {
+    cursor: pointer;
+}
+/* input[type="search"] {
+    width: 500px !important;
+} */
+.richText .richText-toolbar ul li a {
+    color:  #5e6278 !important;
+    border-bottom: 1px solid #efefef;
+}
+td.desc *{
+    font-size: 14px !important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 250px;
+}
+.richText .richText-editor {
+    height: 150px !important;
+}
+.alert-danger {
+    border-color: #f1416c17 !important;
+}
+.alert-success {
+    border-color: #50cd8921 !important; 
+}
+img.sm-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+.symbol.symbol-lg-40px > img,.symbol.symbol-50px > img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+div#kt_datatable_zero_configuration_length {
+    float: left;
+}
+#list-table tr td,#kt_datatable_zero_configuration tr td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.subscription-table tr td{
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+div.dataTables_wrapper div.dataTables_length label,div.dataTables_wrapper div.dataTables_filter label {
+    font-size: 0px;
+}
+div.dataTables_wrapper div.dataTables_length select,div.dataTables_wrapper div.dataTables_filter input {
+    border-radius: 8px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: none;
+    background-color: #f9f9f9;
+    font-size:14px;
+}
+/* .table th.sorting{
+    text-transform: uppercase !important;
+} */
+.div.dtsp-searchPane div.dtsp-topRow.dtsp-bordered {
+    background-color: #f9f9f9;
+    border-radius: 3px;
+    padding: 8px;
+}
+div.dtsp-panesContainer button.dtsp-collapseAll {
+    padding: 10px;
+    background-color: #f1faff;
+    color: #009ef7;
+}
+div.dtsp-panesContainer button.dtsp-showAll {
+    color: #f1416c;
+    padding: 10px;
+    margin: 0 10px;
+    background-color: #fff5f8;
+}
+div.dtsp-panesContainer button.dtsp-collapseAll, div.dtsp-panesContainer button.dtsp-showAll,div.dtsp-panesContainer button.dtsp-clearAll {
+    padding: 10px 15px !important;
+    background-color: #3e97ff !important;
+    color: #fff !important;
+    border-radius: 4px;
+}
+div.dtsp-panesContainer button.dtsp-showAll{
+    background-color: #47be7d !important;
+}
+div.dtsp-panesContainer button.dtsp-clearAll{
+   background-color: #f1416c !important; 
+}
+i.fa-pen-to-square, i.fa-trash-can {
+    font-size: 16px !important;
+}
+li.avatar-sm img.rounded-circle{
+  border-radius: 20% !important;
+}
+.dtsp-panesContainer{
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+}
+.dtsp-panesContainer .dtsp-titleRow {
+    order: 2;
+    padding-top: 10px;
+}
+.dtsp-panesContainer .dtsp-title {
+    display: none;
+}
+.dtsp-searchPanes {
+    width: 70%;
+}
+.dtsp-topRow.dtsp-subRowsContainer.dtsp-bordered {
+    border-radius: 4px !important;
+    background-color: #f1f1f2 !important;
+}
+button.dtsp-paneButton.dtsp-nameButton span, button.dtsp-paneButton.dtsp-countButton span {
+    display: none;
+}
+button.dtsp-paneButton.dtsp-nameButton,button.dtsp-paneButton.dtsp-countButton {
+    display: none !important;
+}
+.dtsp-searchCont input.dtsp-search {
+    padding: 10px !important;
+    font-size: 14px !important;
+}
+td.dtsp-nameColumn.sorting_1 {
+    background-color: #3e97ff;
+    box-shadow: none !important;
+}
+td.dtsp-nameColumn.sorting_1 .dtsp-nameCont {
+    padding: 5px;
+    color:#fff;
+}
+div.dtsp-searchPane div.dataTables_wrapper div.dataTables_scrollBody table tr>td{
+    border-bottom: 2px solid #fff;
+}
+table.transaction-table tr td {
+    padding: 20px!important;
+}
+.card-header {
+    border-bottom: 0px !important;
+}
+.ql-editor {
+    min-height: 150px;
+}
+.modal i.ki-duotone.ki-cross.fs-1 {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+}
+.ql-editor ol li:before {
+    content:none !important;
+}
+div.app-sidebar-toggle i.ki-exit-left {
+    color: #46764E;
+}
+
+/* Toasts Notifications */
+.toast-success {
+    width: 250px !important;
+}
+
+.toast-error {
+    width: 350px !important;
+}
+
+/* .toast{
+    border-radius:20px !important;
+    border:2px solid #fff !important;
+    opacity: 1 !important;
+} */
+
+.toast-success .toast {
+    border-radius: 6px !important;
+    border: 2px solid #92c49d !important;
+    opacity: 1 !important;
+}
+
+.toast-title{
+    font-size: 15px !important;
+    display:none !important;
+}
+
+.toast-message{
+    font-weight: 700;
+    font-size: 14px !important;
+    padding-left: 10px !important;  
+}
+
+.toast-success .toast-message{
+    color: #155724; 
+}
+
+.toast-close-button { 
+    top: 0px !important; 
+    font-size: 22px !important;
+}
+
+.toast-success .toast-close-button {
+    top: 0px !important; 
+    color: #155724 !important;
+    font-size: 22px !important;
+}
+
+.toast-success {
+    background-color: #aedab8 !important /* Custom green */
+}
+
+/* Custom background color for error */
+.toast-error {
+    background-color: #eb192e !important; /* Custom red */
+}
+
+/* Custom background color for info */
+.toast-info {
+    background-color: #17a2b8 !important; /* Custom blue */
+}
+
+/* Custom background color for warning */
+.toast-warning {
+    background-color: #ffc107 !important; /* Custom yellow */
+}
+
+/* Optionally, you can also customize the text color */
+.toast-success, .toast-error, .toast-info, .toast-warning {
+    color: #fff; /* Set text color to white for better contrast */
+}
+
+#toast-container>div {
+    box-shadow: none !important;
+}
+
+#toast-container>div:hover{
+    box-shadow: none !important;
+}

@@ -1,0 +1,327 @@
+<%- include('../layout/header.ejs') %>
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <%- include('../layout/navbar.ejs') %>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <%- include('../layout/sidebar.ejs') %>
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                                <a href="/dashboard" class="text-gray-500">
+                                                    <i class="ki-duotone ki-home fs-1 text-gray-900"></i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-900 fw-bold lh-1">Payment Method</li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-500">Set Payment Method</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-success alert-dismissible" role="alert"><%= message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="card mb-5 mb-xl-10">
+                                            <div class="card-header pt-8 border-0 cursor-pointer min-h-30px" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                                <div class="card-title m-0">
+                                                    <h3 class="fw-bold m-0">Payment Method</h3>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework" method="post">
+                                                    <div class="col-md-9 d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                                                        <div class="product-content">
+                                                            <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+                                                                <div class="d-flex flex-column gap-7 gap-lg-10">
+                                                                <div class="card card-flush py-4">
+                                                                    <div class="card-header mb-5">
+                                                                        <div class="card-title">
+                                                                            <h2>Paypal</h2>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body pt-0">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row mt-8 mb-10">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Is Enable</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="form-check form-switch">
+                                                                                            <input class="form-check-input" type="checkbox" name="paypal_is_enable" id="flexSwitchDefault"
+                                                                                            <% if(payment) { if(payment.paypal_is_enable == 1) { %> checked <% }} %>/>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row mb-10 default-hide paypal-mode-section">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Mode</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="d-flex gap-10">
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio" id="flexRadioChecked" name="paypal_mode" value="testMode"
+                                                                                                <% if(payment) { if(payment.paypal_mode == "testMode") { %> checked <% }} else { %> checked <% } %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Test Mode</label>
+                                                                                            </div>
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio"  id="flexRadioChecked" name="paypal_mode" value="liveMode"
+                                                                                                <% if(payment) { if(payment.paypal_mode == "liveMode") { %> checked <% }} %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Live Mode</label>
+                                                                                            </div>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="paypal-test-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Merchant ID</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_testmode_merchant_Id" class="form-control form-control-solid mb-2" placeholder="Merchant ID" value="<%= payment ? payment.paypal_testmode_merchant_Id :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Tokenization Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_testmode_tokenization_key" class="form-control form-control-solid mb-2" placeholder="Tokenization Key" value="<%= payment ? payment.paypal_testmode_tokenization_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Public Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_testmode_public_key" class="form-control form-control-solid mb-2" placeholder="Public Key" value="<%= payment ? payment.paypal_testmode_public_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Private Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_testmode_private_key" class="form-control form-control-solid mb-2" placeholder="Private Key" value="<%= payment ? payment.paypal_testmode_private_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="paypal-live-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Live Merchant ID</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_livemode_merchant_Id" class="form-control form-control-solid mb-2" placeholder="Merchant ID" value="<%= payment ? payment.paypal_livemode_merchant_Id :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Tokenization Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_livemode_tokenization_key" class="form-control form-control-solid mb-2" placeholder="Tokenization Key" value="<%= payment ? payment.paypal_livemode_tokenization_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Public Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_livemode_public_key" class="form-control form-control-solid mb-2" placeholder="Public Key" value="<%= payment ? payment.paypal_livemode_public_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Private Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="paypal_livemode_private_key" class="form-control form-control-solid mb-2" placeholder="Private Key" value="<%= payment ? payment.paypal_livemode_private_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card card-flush py-4">
+                                                                    <div class="card-header mb-5">
+                                                                        <div class="card-title">
+                                                                            <h2>Stripe</h2>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body pt-0">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row mt-8 mb-10 ">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Is Enable</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="form-check form-switch">
+                                                                                            <input class="form-check-input" type="checkbox" name="stripe_is_enable" id="flexSwitchDefault"
+                                                                                            <% if(payment) { if(payment.stripe_is_enable == 1) { %> checked <% }} %>/>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row mb-10 stripe-mode-section">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Mode</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="d-flex gap-10">
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio" id="flexRadioChecked" name="stripe_mode" value="testMode"
+                                                                                                <% if(payment) { if(payment.stripe_mode == "testMode") { %> checked <% }} else { %> checked <% } %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Test Mode</label>
+                                                                                            </div>
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio"  id="flexRadioChecked" name="stripe_mode" value="liveMode"
+                                                                                                <% if(payment) { if(payment.stripe_mode == "liveMode") { %> checked <% }} %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Live Mode</label>
+                                                                                            </div>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="stripe-test-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Publishable Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="stripe_testmode_publishable_key" class="form-control form-control-solid mb-2" placeholder="Publishable Key" value="<%= payment ? payment.stripe_testmode_publishable_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Secret Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="stripe_testmode_secret_key" class="form-control form-control-solid mb-2" placeholder="Secret Key" value="<%= payment ? payment.stripe_testmode_secret_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="stripe-live-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Publishable Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="stripe_livemode_publishable_key" class="form-control form-control-solid mb-2" placeholder="Publishable Key" value="<%= payment ? payment.stripe_livemode_publishable_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Secret Key</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="stripe_livemode_secret_key" class="form-control form-control-solid mb-2" placeholder="Secret Key" value="<%= payment ? payment.stripe_livemode_secret_key :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card card-flush py-4">
+                                                                    <div class="card-header mb-5">
+                                                                        <div class="card-title">
+                                                                            <h2>Razorpay</h2>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body pt-0">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row mt-8 mb-10">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Is Enable</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="form-check form-switch">
+                                                                                            <input class="form-check-input" type="checkbox" name="razorpay_is_enable" id="flexSwitchDefault"
+                                                                                            <% if(payment) { if(payment.razorpay_is_enable == 1) { %> checked <% }} %>/>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row mb-10 razorpay-mode-section">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Mode</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="d-flex gap-10">
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio" id="flexRadioChecked" name="razorpay_mode" value="testMode"
+                                                                                                <% if(payment) { if(payment.razorpay_mode == "testMode") { %> checked <% }} else { %> checked <% } %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Test Mode</label>
+                                                                                            </div>
+                                                                                            <div class="form-check form-check-custom form-check-solid">
+                                                                                                <input class="form-check-input" type="radio"  id="flexRadioChecked" name="razorpay_mode" value="liveMode"
+                                                                                                <% if(payment) { if(payment.razorpay_mode == "liveMode") { %> checked <% }} %>/>
+                                                                                                <label class="form-check-label" for="flexRadioChecked">Live Mode</label>
+                                                                                            </div>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="razorpay-test-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Key ID</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="razorpay_testmode_key_Id" class="form-control form-control-solid mb-2" placeholder="Key ID" value="<%= payment ? payment.razorpay_testmode_key_Id :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Key Secret</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="razorpay_testmode_key_secret" class="form-control form-control-solid mb-2" placeholder="Key Secret" value="<%= payment ? payment.razorpay_testmode_key_secret :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="razorpay-live-mode">
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Key ID</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="razorpay_livemode_key_Id" class="form-control form-control-solid mb-2" placeholder="Key ID" value="<%= payment ? payment.razorpay_livemode_key_Id :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-10 row">
+                                                                                        <label class="form-label col-lg-2">Key Secret</label>
+                                                                                        <div class="col-lg-10">
+                                                                                            <input type="text" name="razorpay_livemode_key_secret" class="form-control form-control-solid mb-2" placeholder="Key Secret" value="<%= payment ? payment.razorpay_livemode_key_secret :  ''  %>" >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card card-flush py-4">
+                                                                    <div class="card-header mb-5">
+                                                                        <div class="card-title">
+                                                                            <h2>Cash on delivery</h2>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body pt-0">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12">
+                                                                                <div class="row mt-8 mb-10">
+                                                                                    <label class="required form-label fs-5 fw-semibold col-lg-2">Is Enable</label>
+                                                                                    <div class="col-lg-10">
+                                                                                        <div class="form-check form-switch">
+                                                                                            <input class="form-check-input" type="checkbox" name="cash_on_delivery_is_enable" id="cash_on_delivery_is_enable"
+                                                                                            <% if(payment) { if(payment.cash_on_delivery_is_enable == 1) { %> checked <% }} %>/>
+                                                                                        </div>                                                    
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                                                                <span class="indicator-label">Submit</span>
+                                                            </button>
+                                                            <a href="/dashboard" class="btn btn-secondary ms-5">Back</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<%- include('../layout/footer.ejs') %>

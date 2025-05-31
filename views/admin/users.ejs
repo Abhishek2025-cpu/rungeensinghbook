@@ -1,0 +1,122 @@
+<%- include('../layout/header.ejs') %>
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <%- include('../layout/navbar.ejs') %>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <%- include('../layout/sidebar.ejs') %>
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                                <a href="/view-dashboard" class="text-gray-500">
+                                                    <i class="ki-duotone ki-home fs-1 text-gray-900">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-900 fw-bold lh-1">Users</li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-500 lh-1">Users</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                <div class="row">
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                            <div class="card-title m-0">
+                                                <h3 class="fw-bold m-0">Users</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top p-9">
+                                            <div class="table-responsive">   
+                                                <table class="table table-hover table-rounded table-row-bordered border gy-7 gs-7" id="list-table">
+                                                    <thead>
+                                                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                                            <th>Sr No</th>
+                                                            <th>Image</th>
+                                                            <th>Username</th>
+                                                            <th>Phone</th>
+                                                            <th>Email</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="fw-semibold text-gray-600">
+                                                        <% if(users.length > 0) {
+                                                            for(let i=0; i < users.length; i++) { %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= i+1 %>
+                                                                    </td>
+                                                                    <% const classNames = ['badge badge-light-primary text-primary', 'badge badge-light-danger text-danger', 'badge badge-light-info text-info', 'badge badge-light-success text-success','badge badge-light-warning text-warning']; %>
+                                                                    <td>
+                                                                        <div class="symbol symbol-50px symbol-circle overflow-hidden p-0">
+                                                                            <div class="symbol-label <%= classNames[i] %> text-uppercase p-0">
+                                                                                <% if(users[i].image) { %>
+                                                                                    <img src="./assets/userImages/<%= users[i].image %>" alt="<%= users[i].username %>" class="w-50px h-50px object-fit-cover">
+                                                                                <% } else { %>
+                                                                                    <span class="fs-3"><%= users[i].username.charAt(0); %></span>
+                                                                                <% } %>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><h2 class="text-gray-800 pt-5 fs-5"><%= users[i].username %></h2></td>
+
+                                                                    <td><%= users[i].country_code %> <%= users[i].phone %></td>
+
+                                                                    <td><%= users[i].email %></td>
+
+                                                                    <% for (let j in loginData) {
+
+                                                                        if(String(loginData[j]._id) === locals.user.id) { %>
+
+                                                                        <td>
+                                                                            <% if(loginData[j].is_admin==1) { %>
+                                                                                <form action="/users/<%= users[i]._id %>/toggle" method="POST">
+                                                                                    <button type="submit" class="btn btn-sm <%= users[i].active == true ? 'btn-primary' : 'btn-secondary' %>"
+                                                                                        onclick="return confirm(`Are you sure you want to <%= users[i].active == true ? 'Deactive': 'Active'%> <%= users[i].username %> ?` )"><%= users[i].active ? 'Active': 'Deactive' %>
+                                                                                    </button>
+                                                                                </form>
+                                                                            <% } else if (loginData[j].is_admin==0) { %>
+                                                                                    <button type=""class="btn btn-sm <%= users[i].active == true ? 'btn-primary' : 'btn-danger' %>"onclick="return alert(`You have no access to edit <%= users[i].username %>.` )">
+                                                                                        <%= users[i].active == true ? 'Active': 'Deactive' %>
+                                                                                    </button>
+                                                                            <% } } }%>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <% } } %>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="kt_app_footer" class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3">
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../layout/footer.ejs') %>
+                                        

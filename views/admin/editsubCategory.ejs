@@ -1,0 +1,123 @@
+<%- include('../layout/header.ejs') %>
+<body id="kt_app_body" data-kt-app-header-fixed="true" data-kt-app-header-fixed-mobile="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" data-kt-app-aside-enabled="true" data-kt-app-aside-fixed="true" data-kt-app-aside-push-toolbar="true" data-kt-app-aside-push-footer="true" class="app-default">
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+        <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+            <%- include('../layout/navbar.ejs') %>
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                <%- include('../layout/sidebar.ejs') %>
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                                <a href="/view-subcategory" class="text-gray-500">
+                                                    <i class="ki-duotone ki-element-7 fs-1 text-gray-900">
+                                                        <span class="path1"></span>
+                                                        <span class="path2"></span>
+                                                        <span class="path3"></span>
+                                                        <span class="path4"></span>
+                                                    </i>
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-900 fw-bold lh-1">Subcategory</li>
+                                            <li class="breadcrumb-item">
+                                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                                            </li>
+                                            <li class="breadcrumb-item text-gray-700 lh-1">Edit Subcategory</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            <div id="kt_app_content_container" class="app-container container-fluid">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-success alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                        <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="card mb-5 mb-xl-10">
+                                            <div class="card-header border-0" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                                                <div class="card-title m-0">
+                                                    <h3 class="fw-bold m-0">Edit Subcategory</h3>
+                                                </div>
+                                            </div>
+                                            <form class="form form-vertical" method="post" enctype="multipart/form-data">
+                                                <div class="card-body border-top p-9">
+                                                    <div class="row mb-10">
+                                                        <label for="exampleFormControlInput1" class="required fs-5 col-lg-2 fw-semibold mb-2">Name</label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control" name="name" placeholder="Enter name" pattern="^[A-Za-z0-9 ,.-&]+$" required value="<%= subcategory.name %>">
+                                                            <input type="hidden" name="id" value="<%= subcategory._id %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-10">
+                                                        <label for="formFile" class="required fs-5 fw-semibold mb-2 col-lg-2">Image</label>
+                                                        <div class="col-lg-10">
+                                                            <div class="image-input image-input-outline mb-3" data-kt-image-input="true" style="background-image: url('assets/media/svg/files/blank-image.svg')">
+                                                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('/assets/userImages/<%= subcategory.image %>')"></div>
+                                                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" aria-label="Change avatar" data-bs-original-title="Change avatar" data-kt-initialized="1">
+                                                                    <i class="ki-duotone ki-pencil fs-7"><span class="path1"></span><span class="path2"></span></i>
+                                                                    <!--begin::Inputs-->
+                                                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" id="avatar-input">
+                                                                    <input type="hidden" name="avatar_remove">
+                                                                </label>
+                                                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" aria-label="Cancel avatar" data-bs-original-title="Cancel avatar" data-kt-initialized="1">
+                                                                    <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span class="path2"></span></i></span>
+                                                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" aria-label="Remove avatar" data-bs-original-title="Remove avatar" data-kt-initialized="1">
+                                                                    <i class="ki-duotone ki-cross fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-10">
+                                                        <label for="formFile" class="required fs-5 fw-semibold mb-2 col-lg-2">Category</label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-select" aria-label="Select example" name="categoryId" data-control="select2" data-dropdown-parent="#kt_header_search" data-placeholder="Select Category..." class="form-select form-select-sm form-select-solid">
+                                                                <% if(category.length> 0 ) { %>
+                                                                    <option value="" disabled selected>Select Category</option>
+                                                                    <% for(let j=0; j < category.length; j++) { %>
+                                                                        <% if (String(subcategory.categoryId._id) === String(category[j]._id)) { %>
+                                                                                <option  value="<%= category[j]._id %>" selected><%= category[j].name %></option>
+                                                                        <% }else { %>
+                                                                            <option  value="<%= category[j]._id %>"><%= category[j].name %></option>
+                                                                        <% } %>
+                                                                <% } } %>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="col-12 d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-primary me-3 mb-1">Save</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<%- include('../layout/footer.ejs') %>

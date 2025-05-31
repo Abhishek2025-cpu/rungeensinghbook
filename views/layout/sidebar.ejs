@@ -1,0 +1,313 @@
+<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+    <div class="d-flex flex-column justify-content-between h-100 hover-scroll-overlay-y my-2 d-flex flex-column" id="kt_app_sidebar_main" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header" data-kt-scroll-wrappers="#kt_app_main" data-kt-scroll-offset="5px">
+        <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
+            <!-- Dashboard menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item dash-menu2" >
+                    <a class="menu-link" href="/dashboard">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-element-10 fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Dashboard</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Category menu -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-element-11 fs-1 text-gray-800">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Category</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link" href="/add-category"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add Category</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/view-category"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View Category</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Subcategory menu -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-element-7 fs-1 text-gray-800">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Subcategory</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link" href="/add-subcategory"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add Subcategory</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/view-subcategory"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View Subcategory</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Author menu -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-user fs-1 text-gray-800">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Author</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link" href="/add-author"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add Author</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/view-author"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View Author</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Book menu -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-book-open fs-1 text-gray-800">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Book</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link" href="/add-book"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add Book</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/view-book"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View Book</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Subscription Plan menu -->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="ki-duotone ki-dollar fs-1 text-gray-800">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                        </i>
+                    </span>
+                    <span class="menu-title">Subscription Plan</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link" href="/add-subscription"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Add Plan</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="/view-subscription"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">View Plan</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Notification menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item">
+                    <a class="menu-link" href="/send-notification"  data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-notification-on fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Notification</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Pages menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item">
+                    <a class="menu-link" href="/add-page"  data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-some-files fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Pages</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Payment Gateway menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item dash-menu2">
+                    <a class="menu-link" href="/payment-gateway" data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-two-credit-cart fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">Payment Gateway</span>
+                    </a>
+                </div>
+            </div>
+            <!-- SMTP Email menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item">
+                    <a class="menu-link" href="/smtp-email"  data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-sms fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                        </span>
+                        <span class="menu-title">SMTP Email</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Users menu -->
+            <div data-kt-menu-trigger="click" class="menu-item">
+                <div class="menu-item" >
+                    <a class="menu-link" href="/users"  data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-people fs-1 text-gray-800">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                            </i>
+                        </span>
+                            <span class="menu-title">Users</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Orders menu -->
+                <div data-kt-menu-trigger="click" class="menu-item">
+                    <div class="menu-item" >
+                        <a class="menu-link" href="/orders"  data-bs-dismiss="click" data-bs-placement="right">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-credit-cart fs-1 text-gray-800">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                    <span class="path5"></span>
+                                </i>
+                            </span>
+                                <span class="menu-title">Orders</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Reviews menu -->
+                    <div data-kt-menu-trigger="click" class="menu-item">
+                        <div class="menu-item" >
+                            <a class="menu-link" href="/book-review"  data-bs-dismiss="click" data-bs-placement="right">
+                                <span class="menu-icon">
+                                    <i class="ki-duotone ki-star fs-1 text-gray-800">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
+                                    </i>
+                                </span>
+                                    <span class="menu-title">Reviews</span>
+                                </a>
+                        </div>
+                    </div>
+                    <!-- Verification menu -->
+                    <!-- <div data-kt-menu-trigger="click" class="menu-item">
+                      <div class="menu-item dash-menu2">
+                          <a class="menu-link" href="/verification" data-bs-dismiss="click" data-bs-placement="right">
+                              <span class="menu-icon">
+                                  <i class="fa-solid fa-shield-halved fs-2 text-gray-700"></i>
+                              </span>
+                              <span class="menu-title">Verification</span>
+                          </a>
+                      </div>
+                  </div> -->
+                </div>
+            </div>
+        </div>

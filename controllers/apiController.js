@@ -23,7 +23,7 @@ const FavouriteBook = require('../models/favouriteBookModel');
 const Downloadpdf = require('../models/downloadpdfModel');
 const PaymentGateway = require('../models/paymentGatewayModel');
 const admin = require('../config/firebase'); // Import the initialized Firebase instance
-const { verifyAccess } = require('../config/verification');
+
 
 // Function to send a notification with title and body using FCM
 function sendPushNotification(registrationToken, title, body) {
@@ -49,7 +49,7 @@ function sendPushNotification(registrationToken, title, body) {
 // Check if user already exists with the email
 const CheckRegisteredUser = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             // Check if user already exists with the email
             const emailExist = await User.findOne({ email: req.body.email });
             if (emailExist) {
@@ -57,7 +57,7 @@ const CheckRegisteredUser = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Please signup..!!", "error": 1 } });
             }
-        });
+ 
     } catch (error) {
         console.log(error.message);
     }
@@ -130,7 +130,7 @@ const SendOTP = async (name, email, OTP) => {
 // Signup
 const Signup = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+ 
             // hash the password
             const pass = sha256.x2(req.body.password);
 
@@ -200,7 +200,7 @@ const Signup = async (req, res) => {
                     return res.json({ "data": { "success": 0, "message": "User not registered..!!*", "error": 1 } });
                 }
             }
-        });
+       
     }
 
     catch (error) {
@@ -211,7 +211,7 @@ const Signup = async (req, res) => {
 // Get User OTP
 const GetUserOTP = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const email = req.body.email;
             const findUser = await UserOTP.findOne({ email: email });
             if (findUser) {
@@ -219,7 +219,7 @@ const GetUserOTP = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "OTP Not Found", "error": 1 } });
             }
-        });
+      
     }
     catch (error) {
         return res.json({ data: { success: 0, message: "An error occurred", error: 1 } });
@@ -229,7 +229,7 @@ const GetUserOTP = async (req, res) => {
 // Verify the OTP
 const OTPVerification = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const email = req.body.email;
 
             // Find the user by email
@@ -285,7 +285,7 @@ const OTPVerification = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Email not found..!!*", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         return res.json({
             "data": { "success": 0, "message": error, "error": 1 }
@@ -296,7 +296,7 @@ const OTPVerification = async (req, res) => {
 // Verify User
 const VerifyUser = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+       
             const email = req.body.email;
             const user = await User.findOne({ email: email });
             if (user) {
@@ -309,7 +309,7 @@ const VerifyUser = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "User not found..!!*", "error": 1 } });
             }
-        });
+      
     }
     catch (error) {
         console.log(error.message);
@@ -319,7 +319,7 @@ const VerifyUser = async (req, res) => {
 // Resend OTP
 const ResendOTP = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+   
             const email = req.body.email;
             const user = await User.findOne({ email: email });
             if (user) {
@@ -341,7 +341,7 @@ const ResendOTP = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "User not found..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error.message);
     }
@@ -350,7 +350,7 @@ const ResendOTP = async (req, res) => {
 // Signin
 const SignIn = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const { email, password, registrationToken, deviceId } = req.body;
             const hashedPassword = sha256.x2(password);
 
@@ -422,7 +422,7 @@ const SignIn = async (req, res) => {
                     error: "0"
                 }
             });
-        });
+     
     } catch (error) {
         console.error(error);
         return res.json({ data: { success: 0, message: "Error occurred. Please try again.", error: 1 } });
@@ -499,7 +499,7 @@ const ForgotPasswordOTP = async (name, email, OTP2) => {
 // Get Forgot Password OTP
 const GetForgotPasswordOTP = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+       
             const email = req.body.email;
             const findUser = await PasswordOTP.findOne({ email: email });
             if (findUser) {
@@ -507,7 +507,7 @@ const GetForgotPasswordOTP = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "OTP Not Found", "error": 1 } });
             }
-        });
+        
     } catch (error) {
         return res.json({ data: { success: 0, message: "An error occurred", error: 1 } });
     }
@@ -516,7 +516,7 @@ const GetForgotPasswordOTP = async (req, res) => {
 // Forgot Password
 const ForgotPassword = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+ 
             // Find the user by email
             const email = req.body.email;
             // Find the user by email
@@ -542,7 +542,7 @@ const ForgotPassword = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Email not matched..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error.message);
     }
@@ -551,7 +551,7 @@ const ForgotPassword = async (req, res) => {
 // Forgot Password Verification
 const ForgotPasswordVerification = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+  
             // Find the user by email
             const email = req.body.email;
             const findUser = await PasswordOTP.findOne({ email: email });
@@ -581,7 +581,7 @@ const ForgotPasswordVerification = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "OTP expired...Try again for password reset", "error": 1 } });
             }
-        });
+     
     } catch (error) {
         return res.json({ "data": { "success": 0, "message": error, "error": 1 } });
     }
@@ -590,7 +590,7 @@ const ForgotPasswordVerification = async (req, res) => {
 // Reset Password
 const ResetPassword = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const email = req.body.email;
             const newpassword = req.body.newpassword;
 
@@ -626,7 +626,7 @@ const ResetPassword = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "OTP expired...Try again for password reset..!!*", "error": 1 } });
             }
-        });
+       
     }
     catch (error) {
         console.log(error.message);
@@ -636,10 +636,10 @@ const ResetPassword = async (req, res) => {
 // Upload Image
 const UploadImage = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+   
             const image = req.file.filename;
             res.json({ "data": { "success": 1, "message": "Image upload successfully..!!", image: image, "error": 0 } });
-        });
+       
     } catch (error) {
         console.log(error.message);
     }
@@ -648,7 +648,7 @@ const UploadImage = async (req, res) => {
 // Edit User Profile
 const EditUser = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+
             // Find the user by id
             const id = req.body.id;
 
@@ -667,7 +667,7 @@ const EditUser = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "User not updated..!!*", "error": 1 } });
             }
-        });
+       
     }
     catch (error) {
         console.log(error.message);
@@ -677,7 +677,7 @@ const EditUser = async (req, res) => {
 // Change Password
 const ChangePassword = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Find the user by email
             const email = req.body.email;
 
@@ -693,7 +693,7 @@ const ChangePassword = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Password not changed..!!*", "error": 1 } });
             }
-        });
+       
     }
     catch (error) {
         console.log(error.message);
@@ -703,7 +703,7 @@ const ChangePassword = async (req, res) => {
 // Get User Profile
 const GetUser = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             // Find the user by id
             const user = await User.findOne({ _id: req.body.userId });
             if (user) {
@@ -727,7 +727,7 @@ const GetUser = async (req, res) => {
             else {
                 return res.status(404).json({ "data": { "success": 0, "message": "User not found..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error.message);
     }
@@ -736,7 +736,7 @@ const GetUser = async (req, res) => {
 // Delete User
 const DeleteUser = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+       
             // Find the user by id
             const user = await User.findOne({ _id: req.body.userId });
 
@@ -773,7 +773,7 @@ const DeleteUser = async (req, res) => {
                     return res.json({ "data": { "success": 0, "message": "User Account has not been deleted...!!*", "error": 1 } });
                 }
             }
-        });
+       
     } catch (error) {
         return res.json({ "success": 0, "message": "User not found...!!" });
     }
@@ -782,7 +782,7 @@ const DeleteUser = async (req, res) => {
 // Signout
 const signOut = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             const userId = req.body.userId;
             const deviceId = req.body.deviceId;
             const filter = { userId: userId, deviceId: deviceId };
@@ -795,7 +795,7 @@ const signOut = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "User not found..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         return res.json({ "data": { "success": 0, "message": "Signout failed..!!*", "error": 1 } });
     }
@@ -804,7 +804,7 @@ const signOut = async (req, res) => {
 // Get Categories
 const GetCategories = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+        
             // Fetch active categories
             let categories = await Category.find({ is_active: 1 });
 
@@ -822,7 +822,7 @@ const GetCategories = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Category not found...!!*", "error": 1 } });
             }
-        });
+    
     } catch (error) {
         console.log(error);
     }
@@ -831,7 +831,7 @@ const GetCategories = async (req, res) => {
 // Get Subcategories
 const GetSubcategories = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             // Fetch active subcategories
             let subcategories = await Subcategory.find({ is_active: 1 }).populate('categoryId');
 
@@ -851,7 +851,7 @@ const GetSubcategories = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Subcategory not found...!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }
@@ -860,7 +860,7 @@ const GetSubcategories = async (req, res) => {
 // Get Subcategory By Category
 const GetSubcategoryByCategory = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             // Check if categoryId is provided
             if (!req.body.categoryId) {
                 return res.json({ "data": { "success": 0, "message": "CategoryId is required..!!*", "error": 1 } });
@@ -882,7 +882,7 @@ const GetSubcategoryByCategory = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Subcategory not found...!!*", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         console.log(error);
     }
@@ -901,7 +901,7 @@ const removeNonBreakingSpaces = (html) => {
 // Get Authors
 const GetAuthors = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             // Fetch active authors
             let author = await Author.find({ is_active: 1 });
 
@@ -920,7 +920,7 @@ const GetAuthors = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Author not found...!!*", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         console.log(error);
     }
@@ -929,7 +929,7 @@ const GetAuthors = async (req, res) => {
 // Get Author By Category
 const GetAuthorDetails = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+       
             // Check if authorId is provided
             if (!req.body.authorId) {
                 return res.json({ "data": { "success": 0, "message": "AuthorId is required...!!*", "error": 1 } });
@@ -959,7 +959,7 @@ const GetAuthorDetails = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Author not found...!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }
@@ -1053,7 +1053,7 @@ const GetBooksByReviewRatingWithFilter = async (filterId, filterType = 'author',
 // Get All Books
 const GetBook = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+        
             const { categoryId, authorId, search } = req.body;
 
             // Constructing the filter object based on the provided criteria
@@ -1104,7 +1104,7 @@ const GetBook = async (req, res) => {
             } else {
                 res.json({ "data": { "success": 0, "message": "Books not found...!!", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         console.log(error);
         res.json({ "data": { "success": 0, "message": "An error occurred while fetching books...!!", "error": 1 } });
@@ -1114,7 +1114,7 @@ const GetBook = async (req, res) => {
 // Get Popular Books
 const GetPopularBooks = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Fetch top 5 popular books
             const sortedBooks = await GetBooksByReviewRating(5); // Fetch top 5 popular books
             // Check if books are found
@@ -1123,7 +1123,7 @@ const GetPopularBooks = async (req, res) => {
             } else {
                 res.json({ "data": { "success": 0, "message": "Books not found.", "error": 1 } });
             }
-        });
+     
     } catch (error) {
         res.json({ "data": { "success": 0, "message": "An error occurred.", "error": 1 } });
     }
@@ -1132,7 +1132,7 @@ const GetPopularBooks = async (req, res) => {
 // Get Trending Books
 const GetTrendingBooks = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             // Fetch randomly selected books
             let books = await Book.aggregate([
                 { $match: { is_active: 1 } }, // Match only active books
@@ -1177,7 +1177,7 @@ const GetTrendingBooks = async (req, res) => {
                 // No books found
                 return res.json({ data: { success: 0, message: "Books not found.", error: 1 } });
             }
-        });
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json({ data: { success: 0, message: "Internal server error.", error: 1 } });
@@ -1187,7 +1187,7 @@ const GetTrendingBooks = async (req, res) => {
 // Get Book Details
 const GetBookDetails = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Check if bookId is provided
             if (!req.body.bookId) {
                 return res.json({ "data": { "success": 0, "message": "BookId is required...!!*", "error": 1 } });
@@ -1244,7 +1244,7 @@ const GetBookDetails = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Book not found...!!*", "error": 1 } });
             }
-        });
+        
     } catch (error) {
         console.log(error);
         return res.json({ "data": { "success": 0, "message": "An error occurred...!!*", "error": 1 } });
@@ -1254,7 +1254,7 @@ const GetBookDetails = async (req, res) => {
 // Get Book By Author
 const GetBookByAuthor = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Check if authorId is provided
             if (!req.body.authorId) {
                 return res.json({ "data": { "success": 0, "message": "authorId is required...!!*", "error": 1 } });
@@ -1269,7 +1269,7 @@ const GetBookByAuthor = async (req, res) => {
             } else {
                 res.json({ "data": { "success": 0, "message": "Books not found.", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
         return res.json({ "data": { "success": 0, "message": "An error occurred...!!*", "error": 1 } });
@@ -1279,7 +1279,7 @@ const GetBookByAuthor = async (req, res) => {
 // Get Book By Category
 const GetBookByCategory = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             // Check if categoryId is provided
             if (!req.body.categoryId) {
                 return res.json({ "data": { "success": 0, "message": "categoryId is required...!!*", "error": 1 } });
@@ -1294,7 +1294,7 @@ const GetBookByCategory = async (req, res) => {
             } else {
                 res.json({ "data": { "success": 0, "message": "Books not found.", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
         return res.json({ "data": { "success": 0, "message": "An error occurred...!!*", "error": 1 } });
@@ -1304,7 +1304,7 @@ const GetBookByCategory = async (req, res) => {
 // Get Book By Subcategory
 const GetBookBySubcategory = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Check if subcategoryId is provided
             if (!req.body.subcategoryId) {
                 return res.json({ "data": { "success": 0, "message": "subcategoryId is required...!!*", "error": 1 } });
@@ -1317,7 +1317,7 @@ const GetBookBySubcategory = async (req, res) => {
             } else {
                 res.json({ "data": { "success": 0, "message": "Books not found.", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
         return res.json({ "data": { "success": 0, "message": "An error occurred...!!*", "error": 1 } });
@@ -1327,7 +1327,7 @@ const GetBookBySubcategory = async (req, res) => {
 // Add Book Review
 const AddFavouriteBook = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const userId = req.body.userId;
             const bookId = req.body.bookId;
 
@@ -1348,7 +1348,6 @@ const AddFavouriteBook = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Favourite Book Already Exists", "error": 1 } });
             }
-        });
     } catch (error) {
         console.error("An error occurred while adding favorite book:", error);
         return res.status(500).json({ "data": { "success": 0, "message": "Internal Server Error", "error": 1 } });
@@ -1358,7 +1357,7 @@ const AddFavouriteBook = async (req, res) => {
 // Get Favorite Books
 const GetFavouriteBook = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             const userId = req.body.userId;
             // Fetch user's favorite books
             const favouriteBooks = await FavouriteBook.find({ userId }).populate('bookId', 'name image');
@@ -1387,7 +1386,7 @@ const GetFavouriteBook = async (req, res) => {
             } else {
                 return res.json({ data: { success: 0, message: "Favorite Books Not Found", error: 1 } });
             }
-        });
+  
     } catch (error) {
         return res.status(500).json({ data: { success: 0, message: "Internal Server Error", error: 1 } });
     }
@@ -1396,7 +1395,7 @@ const GetFavouriteBook = async (req, res) => {
 // Remove Favorite Book
 const RemoveFavouriteBook = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             // Get userId and bookId from the request body
             const userId = req.body.userId;
             const bookId = req.body.bookId;
@@ -1415,7 +1414,7 @@ const RemoveFavouriteBook = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Favorite Book Not Found", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         console.error("An error occurred while removing favorite book:", error);
         return res.status(500).json({ "data": { "success": 0, "message": "Internal Server Error", "error": 1 } });
@@ -1425,7 +1424,7 @@ const RemoveFavouriteBook = async (req, res) => {
 // Get Subscription Plan
 const GetSubscriptionPlan = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             // Fetch active subscription plans
             let subscriptions = await Subscription.find().sort({ price: 1 });
 
@@ -1448,7 +1447,7 @@ const GetSubscriptionPlan = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Subscription Plan not found...!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }
@@ -1457,7 +1456,7 @@ const GetSubscriptionPlan = async (req, res) => {
 // Get Pages
 const GetPages = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+       
             // Fetch all pages
             let pages = await Page.find();
 
@@ -1478,7 +1477,7 @@ const GetPages = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Pages not found...!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }
@@ -1487,7 +1486,7 @@ const GetPages = async (req, res) => {
 // Get Payment method
 const PaymentMethod = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+ 
         const paymentMethods = await PaymentGateway.find({});
         if (paymentMethods) {
             const paymentData = paymentMethods.map(payment => {
@@ -1549,7 +1548,7 @@ const PaymentMethod = async (req, res) => {
         else {
             return res.json({ "data": { "success": 0, "message": "Payment Gateway not found..!!*", "error": 1 } });
         }
-        });
+      
     } catch (error) {
         console.log(error);
     }
@@ -1558,7 +1557,7 @@ const PaymentMethod = async (req, res) => {
 // Puchase Subscription Plan
 const UserSubscriptionPlan = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             const { userId, subscriptionplanId, paymentmode, transactionId, paymentstatus, paymentdate, price } = req.body;
 
             // Check if subscription plan exists
@@ -1618,7 +1617,7 @@ const UserSubscriptionPlan = async (req, res) => {
             const userPlan = await addSubscription.save();
 
             res.json({ "data": { "success": 1, "message": "Subscription plan purchased successfully.", "error": 0 } });
-        });
+      
 
     } catch (error) {
         console.log(error);
@@ -1629,7 +1628,7 @@ const UserSubscriptionPlan = async (req, res) => {
 // Get User Subscription Plan Records
 const UserSubscriptionrecord = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             if (!req.body.userId) {
                 return res.json({ "data": { "success": 0, "message": "UserId is required..!!*", "error": 1 } });
             }
@@ -1650,7 +1649,7 @@ const UserSubscriptionrecord = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "User Subscriptionplan record not found..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
         res.json({ "data": { "success": 0, "message": "An error occurred..!!*", "error": 1 } });
@@ -1660,7 +1659,7 @@ const UserSubscriptionrecord = async (req, res) => {
 // Subscription Plan Validity
 const UserSubscriptionPlanValidity = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+ 
             const { userId } = req.body;
 
             if (!userId) {
@@ -1742,7 +1741,7 @@ const UserSubscriptionPlanValidity = async (req, res) => {
             };
 
             return res.json({ "data": { "success": 1, "message": "Your Subscription plan validity..!!", subscriptionDetails: subscriptionData, "error": 0 } });
-        });
+      
     } catch (error) {
         console.log(error);
         res.json({ "data": { "success": 0, "message": "An error occurred..!!*", "error": 1 } });
@@ -1752,7 +1751,7 @@ const UserSubscriptionPlanValidity = async (req, res) => {
 // Get Currency
 const GetCurrency = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+     
             // Fetch all currency
             let getCurrency = await Currency.find();
 
@@ -1767,7 +1766,7 @@ const GetCurrency = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Currency not found !!*", "error": 1 } });
             }
-        });
+     
     } catch (error) {
         return res.json({ "data": { "success": 0, "message": "Currency not found !!*", "error": 1 } });
     }
@@ -1776,7 +1775,7 @@ const GetCurrency = async (req, res) => {
 // Add Review
 const AddReview = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+
             const AddReviw = new BookReview({
                 bookId: req.body.bookId,
                 userId: req.body.userId,
@@ -1794,7 +1793,7 @@ const AddReview = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Book review not added..!!*", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         return res.json({ "data": { "success": 0, "message": "Book review not added !!*", "error": 1 } });
     }
@@ -1803,7 +1802,7 @@ const AddReview = async (req, res) => {
 // Get Review
 const GetReview = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+    
             let reviews = await BookReview.find({ is_active: true, bookId: req.body.bookId }).populate('bookId').populate('userId', 'image username');
             if (reviews.length > 0) {
                 let books = await Book.find({ _id: req.body.bookId });
@@ -1830,7 +1829,7 @@ const GetReview = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Book review not found..!!*", "error": 1 } });
             }
-        });
+      
     } catch (error) {
         return res.json({ "data": { "success": 0, "message": "Book review not found..!!*", "error": 1 } });
     }
@@ -1839,7 +1838,7 @@ const GetReview = async (req, res) => {
 // Download PDF
 const DownloadPDF = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+
             if (!req.body.userId || !req.body.bookId) {
                 return res.json({ "data": { "success": 0, "message": "UserId and BookId are required..!!*", "error": 1 } });
             }
@@ -1864,7 +1863,7 @@ const DownloadPDF = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Book not found..!!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.error(error);
         return res.json({ "data": { "success": 0, "message": "PDF not downloaded !!*", "error": 1 } });
@@ -1874,7 +1873,7 @@ const DownloadPDF = async (req, res) => {
 // Download History
 const DownloadHistory = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             //let downloads = await Downloadpdf.find({ userId: req.body.userId }).populate('bookId', 'name image pdf authoId'); 
             let downloads = await Downloadpdf.find({ userId: req.body.userId }).populate({ path: 'bookId', populate: { path: 'authorId' } }).select('name image pdf authorId');
 
@@ -1900,7 +1899,7 @@ const DownloadHistory = async (req, res) => {
             else {
                 return res.json({ "data": { "success": 0, "message": "Download history not found !!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }
@@ -1909,7 +1908,7 @@ const DownloadHistory = async (req, res) => {
 // Get Notifications
 const GetNotifications = async (req, res) => {
     try {
-        await verifyAccess(req, res, async () => {
+      
             let notifications = await CommonNotification.find().populate('bookId', 'name image');
             if (notifications.length > 0) {
                 const notificationsData = notifications.map(notification => {
@@ -1938,7 +1937,7 @@ const GetNotifications = async (req, res) => {
             } else {
                 return res.json({ "data": { "success": 0, "message": "Notifications not found !!*", "error": 1 } });
             }
-        });
+       
     } catch (error) {
         console.log(error);
     }

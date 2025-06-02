@@ -1,14 +1,14 @@
 const Admin = require("../models/adminModel");
 const SMTP = require("../models/SMTPModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load SMTP
 const smtpLoad = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+
             const smtp = await SMTP.findOne({});
             res.render('SMTP', { smtp: smtp });
-        });
+   
     } catch (error) {
         console.log(error.message);
     }

@@ -1,14 +1,14 @@
 const Admin = require("../models/adminModel");
 const Page = require("../models/pagesModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load Page
 const pageLoad = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+
             const pages = await Page.findOne({});
             res.render('page', { pages: pages });
-        });
+       
     } catch (error) {
         console.log(error.message);
     }

@@ -4,7 +4,7 @@ const userimages = path.join('./public/assets/userImages/');
 const Subscription = require("../models/subscriptionModel");
 const Admin = require("../models/adminModel");
 const Currency = require("../models/currencyModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load Subscription Plan
 const subscriptionplanLoad = async(req,res)=>{
@@ -47,7 +47,7 @@ const addSubscription = async (req, res) => {
 // View Subscription Plan
 const viewSubscription = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+      
             let loginData = await Admin.findById({_id: req.session.user_id, is_admin: 1});
             const currencyData = await Currency.findOne({});
             const subscriptions = await Subscription.find({}).sort({price: 1});
@@ -57,7 +57,7 @@ const viewSubscription = async (req, res) => {
             else {
                 console.log(error.message);
             }
-        });
+    
     } catch (error) {
         console.log(error.message);
     }

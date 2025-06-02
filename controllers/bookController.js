@@ -12,7 +12,7 @@ const Notification = require("../models/notificationModel");
 const common_Notification = require("../models/commonNotificationModel");
 const Downloadpdf = require('../models/downloadpdfModel');
 const admin = require('../config/firebase');
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load Book page
 const loadBook = async (req, res) => {
@@ -102,22 +102,22 @@ const addBook = async (req, res) => {
 // Listing Book
 const viewBook = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => {
-            let loginData = await Admin.findById({_id: req.session.user_id});
-            const category = await Category.find();
-            const author = await Author.find();
-            const book = await Book.find({}).sort({ updatedAt: -1 }).populate(['categoryId', 'subcategoryId', 'authorId']);
-                if (book) {
-                    res.render('book', { book: book, loginData: loginData, category: category, author: author });
-                }
-                else {
-                    console.log(error.message);
-                }
-        });
+        let loginData = await Admin.findById({ _id: req.session.user_id });
+        const category = await Category.find();
+        const author = await Author.find();
+        const book = await Book.find({}).sort({ updatedAt: -1 }).populate(['categoryId', 'subcategoryId', 'authorId']);
+        if (book) {
+            res.render('book', { book: book, loginData: loginData, category: category, author: author });
+        } else {
+            console.log("No books found");
+            res.render('book', { book: [], loginData: loginData, category: category, author: author });
+        }
     } catch (error) {
         console.log(error.message);
+        res.status(500).send("Error loading book list.");
     }
 }
+
 
 // Edit Book Details
 const editBook = async (req, res) => {

@@ -4,7 +4,7 @@ const userimages = path.join('./public/assets/userImages/');
 const Category = require("../models/categoryModel");
 const Subcategory = require("../models/subCategoryModel");
 const Admin = require("../models/adminModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Subcaegory Load
 const subcategoryLoad = async(req,res)=>{
@@ -63,7 +63,7 @@ const addSubCategory = async (req, res) => {
 // View Subcategory
 const viewSubcategory = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => {
+      
         let loginData = await Admin.findById({_id: req.session.user_id});
             const subcategories = await Subcategory.find({}).sort({updatedAt: -1}).populate('categoryId');
             if (subcategories) {
@@ -71,7 +71,7 @@ const viewSubcategory = async (req, res) => {
             } else {
                 console.log(error.message);
             }
-        });
+   
     } catch (error) {
         console.log(error.message);
     }

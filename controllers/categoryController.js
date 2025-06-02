@@ -3,7 +3,7 @@ const path = require('path')
 const userimages = path.join('./public/assets/userImages/');
 const Category = require("../models/categoryModel");
 const Admin = require("../models/adminModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load Category
 const categoryLoad = async (req, res) => {
@@ -65,7 +65,7 @@ const addCategory = async (req, res) => {
 // View Category
 const viewCategory = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => {
+       
             let loginData = await Admin.findById({_id: req.session.user_id});
             const allCategory = await Category.find({}).sort({ updatedAt: -1 });
             if (allCategory) {
@@ -74,7 +74,6 @@ const viewCategory = async (req, res) => {
             else {
                 console.log(error.message);
             }
-        });
 
     } catch (error) {
         console.log(error.message);

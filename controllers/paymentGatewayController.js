@@ -1,14 +1,14 @@
 const Payment = require("../models/paymentGatewayModel");
 const Admin = require("../models/adminModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load payment method page
 const loadPayment = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+  
             const payment = await Payment.findOne();
             res.render('paymentGateway', { payment: payment });
-        });
+      
     } catch (error) {
         console.log(error.message);
     }

@@ -4,7 +4,6 @@ const Admin = require("../models/adminModel");
 const Category = require("../models/categoryModel");
 const User = require("../models/userModel");
 const Usersubscriptions = require("../models/userSubscriptionModel");
-const { verifyAdminAccess } = require('../config/verification');
 
 // Load Login Page
 const loginLoad = async(req,res)=>{
@@ -22,10 +21,10 @@ const loginLoad = async(req,res)=>{
 // Load Dashboard
 const loadDashboard = async(req,res)=>{
     try {
-        await verifyAdminAccess(req, res, async () => {
+     
             const category = await Category.find();
             res.render('dashboard',{category:category});
-        });
+    
     } catch (error) {
         console.log(error.message);
     }
@@ -154,11 +153,11 @@ const resetAdminPassword = async (req, res) => {
 // View Users
 const getUsers = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+     
             let loginData = await Admin.find({});
             const user = await User.find().sort({ updatedAt: -1 });
             res.render("users", { users: user, loginData: loginData });
-        });
+   
     } catch (error) {
         console.log(error.message);
     }
@@ -167,11 +166,11 @@ const getUsers = async (req, res) => {
 // View All Transactions
 const getAllTransactons = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => { 
+   
             let loginData = await Admin.find({});
             const user = await Usersubscriptions.find().populate(['userId','subscriptionplanId']).sort({ updatedAt: -1 });
             res.render("orders", { users: user, loginData: loginData });
-        });
+     
     } catch (error) {
         console.log(error.message);
     }

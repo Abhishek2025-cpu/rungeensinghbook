@@ -4,7 +4,7 @@ var he = require('he');
 const userimages = path.join('./public/assets/userImages/');
 const Author = require("../models/authorModel");
 const Admin = require("../models/adminModel");
-const { verifyAdminAccess } = require('../config/verification');
+
 
 // Load Author
 const authorLoad = async(req,res)=>{
@@ -51,21 +51,19 @@ const addAuthor = async (req, res) => {
 // View Author
 const viewAuthor = async (req, res) => {
     try {
-        await verifyAdminAccess(req, res, async () => {
-        let loginData = await Admin.findById({_id: req.session.user_id});
-        const author = await Author.find({}).sort({updatedAt: -1});
-            if (author) {
-                res.render('author', { authorList: author ,loginData: loginData });
-            }
-            else {
-                req.flash('error', 'Author not found..!!*');
-                return res.redirect('/view-author');
-            }
-        });
+        let loginData = await Admin.findById({ _id: req.session.user_id });
+        const author = await Author.find({}).sort({ updatedAt: -1 });
+        if (author) {
+            res.render('author', { authorList: author, loginData: loginData });
+        } else {
+            req.flash('error', 'Author not found..!!*');
+            return res.redirect('/view-author');
+        }
     } catch (error) {
         console.log(error.message);
     }
-}
+};
+
 
 // Edit Author
 const editAuthor = async (req, res) => {
